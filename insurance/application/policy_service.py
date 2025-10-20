@@ -1,10 +1,11 @@
 from insurance.domain.policy import InsurancePolicy
+from insurance.infrastructure.db import fetch_all_policies, fetch_policy_by_uuid
 
 
-def fetch_all_policies():
-    pass  # Placeholder for actual data fetching logic
-def fetch_policy_by_uuid(uuid):
-    pass  # Placeholder for actual data fetching logic
+# def fetch_all_policies():
+#     pass  # Placeholder for actual data fetching logic
+# def fetch_policy_by_uuid(uuid):
+#     pass  # Placeholder for actual data fetching logic
 
 def get_all_policies():
     rows = fetch_all_policies()

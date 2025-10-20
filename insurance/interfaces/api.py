@@ -1,11 +1,12 @@
 from fastapi import FastAPI, HTTPException
+from insurance.application.policy_service import get_all_policies, get_policy_by_uuid
 
-def get_all_policies():
-    # Placeholder for actual implementation
-    pass
-def get_policy_by_uuid(uuid):
-    # Placeholder for actual implementation
-    pass
+# def get_all_policies():
+#     # Placeholder for actual implementation
+#     pass
+# def get_policy_by_uuid(uuid):
+#     # Placeholder for actual implementation
+#     pass
 
 app = FastAPI()
 
