@@ -1,0 +1,4 @@
+venv/
+.venv/
+# optional: ignore pip self-check file
+pip-selfcheck.json
