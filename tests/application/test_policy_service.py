@@ -11,6 +11,7 @@ def test_get_all_policies_with_stubbed_data(monkeypatch):
             (
                 1,
                 UUID("urn:uuid:12345678-1234-5678-1234-567812345678"),
+                "Home Insurance",
                 "Alice",
                 100000,
                 5000,
@@ -20,6 +21,7 @@ def test_get_all_policies_with_stubbed_data(monkeypatch):
             (
                 2,
                 UUID("urn:uuid:12345678-1234-5678-1234-567812345679"),
+                "Auto Insurance",
                 "Bob",
                 200000,
                 10000,
@@ -33,11 +35,21 @@ def test_get_all_policies_with_stubbed_data(monkeypatch):
     assert len(policies) == 2
     assert isinstance(policies[0], InsurancePolicy)
     assert policies[0].id == 1
+    assert policies[0].item == "Home Insurance"
     assert policies[0].policy_holder_name == "Alice"
     assert policies[0].coverage_amount == 100000
     assert policies[0].premium == 5000
     assert policies[0].start_date == date(2023, 1, 1)
     assert policies[0].end_date == date(2024, 1, 1)
+
+    assert isinstance(policies[1], InsurancePolicy)
+    assert policies[1].id == 2
+    assert policies[1].item == "Auto Insurance"
+    assert policies[1].policy_holder_name == "Bob"
+    assert policies[1].coverage_amount == 200000
+    assert policies[1].premium == 10000
+    assert policies[1].start_date == date(2023, 6, 1)
+    assert policies[1].end_date == date(2024, 6, 1)
 
 
 
@@ -45,9 +57,10 @@ def test_get_policy_by_uuid_with_stubbed_data(monkeypatch):
     test_uuid = UUID("urn:uuid:12345678-1234-5678-1234-567812345678")
     monkeypatch.setattr(
         "insurance.application.policy_service.fetch_policy_by_uuid",
-        lambda uuid: (1, uuid, "Alice", 100000, 5000, date(2023, 1, 1), date(2024, 1, 1))
+        lambda uuid: (1, uuid, "Home Insurance", "Alice", 100000, 5000, date(2023, 1, 1), date(2024, 1, 1))
     )
     policy = get_policy_by_uuid(test_uuid)
+    assert policy.item == "Home Insurance"
     assert policy.policy_holder_name == "Alice"
     assert policy.coverage_amount == 100000
     assert policy.premium == 5000

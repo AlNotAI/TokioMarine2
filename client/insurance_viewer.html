@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Insurance Claims Viewer</title>
+
+  <!-- HTMX and HyperScript -->
+  <script src="https://unpkg.com/htmx.org@1.9.2"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.7"></script>
+
+  <!-- Styling -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2em;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    h2 {
+      color: #2c3e50;
+    }
+
+    button {
+      background-color: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      margin-right: 5px;
+    }
+
+    #claims {
+      margin-top: 2em;
+      background-color: #fff;
+      padding: 1em;
+      border-radius: 6px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      margin-bottom: 1em;
+      padding-bottom: 1em;
+      border-bottom: 1px solid #eee;
+    }
+
+    li strong {
+      font-size: 18px;
+      color: #34495e;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .spinner {
+      margin: 20px auto;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #ccc;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Insurance Claims Viewer</h2>
+
+  <!-- Toggle Mode -->
+  <button _="on click
+               toggle .hidden on #all-mode
+               toggle .hidden on #single-mode
+               put '' into #claims">
+    Toggle View Mode
+  </button>
+
+  <!-- All Claims Mode -->
+  <div id="all-mode">
+    <button _="on click
+                 remove .hidden from #spinner
+                 wait 10ms
+                 fetch 'http://0.0.0.0:8000/api/policies/' as json with method:'GET'
+                 then call renderClaims(result)">
+      Load All Claims
+    </button>
+  </div>
+
+  <!-- Single Claim Mode -->
+  <div id="single-mode" class="hidden">
+    <input id="claim-id" placeholder="Enter Claim UUID" />
+    <button _="on click call loadSingleClaim()">Load Specific Claim</button>
+  </div>
+
+  <!-- Spinner -->
+  <div id="spinner" class="spinner hidden"></div>
+
+  <!-- Output container -->
+  <div id="claims"></div>
+
+  <!-- HyperScript functions -->
+  <script type="text/hyperscript">
+    def renderClaims(claims)
+      set html to "<ul>"
+      repeat for claim in claims
+        set html to html + "<li>"
+        set html to html + "<strong>" + claim.holder + "</strong><br>"
+        set html to html + "Item: " + claim['hitem'] + "<br>"
+        set html to html + "Coverage: £" + claim['hcoverage_amount'] + "<br>"
+        set html to html + "Policy Start Date: " + claim.start_date + "<br>"
+        set html to html + "Policy End Date: " + claim.end_date + "<br>"
+        set html to html + "Premium: £" + claim.premium + "<br>"
+        set html to html + "</li>"
+      end
+      set html to html + "</ul>"
+      put html into #claims
+      add .hidden to #spinner
+    end
+
+    def loadSingleClaim()
+      remove .hidden from #spinner
+      wait 10ms
+      set uuid to the value of #claim-id
+      set url to "http://0.0.0.0:8000/api/policies/" + uuid
+      fetch url
+      then call renderClaims([result])
+    end
+  </script>
+
+</body>
+</html>

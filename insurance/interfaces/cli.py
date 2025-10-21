@@ -19,6 +19,7 @@ def init_db(db):
     CREATE TABLE IF NOT EXISTS insurance_policies (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         uuid TEXT UNIQUE NOT NULL,
+        item TEXT NOT NULL,
         policy_holder_name TEXT NOT NULL,
         coverage REAL NOT NULL,
         premium REAL NOT NULL,
@@ -28,9 +29,9 @@ def init_db(db):
     """)
 
     # Insert sample data
-    cursor.execute("INSERT INTO insurance_policies ( uuid, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Sample Policy", 100.0, 10.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
-    cursor.execute("INSERT INTO insurance_policies ( uuid, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Another Policy", 150.0, 15.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
-    cursor.execute("INSERT INTO insurance_policies ( uuid, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Third Policy", 200.0, 20.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
+    cursor.execute("INSERT INTO insurance_policies ( uuid, item, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Home Insurance", "Alice", 100.0, 10.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
+    cursor.execute("INSERT INTO insurance_policies ( uuid, item, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Auto Insurance", "Bob", 150.0, 15.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
+    cursor.execute("INSERT INTO insurance_policies ( uuid, item, policy_holder_name, coverage, premium, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?)", ( str(uuid.uuid4()), "Life Insurance", "Charlie", 200.0, 20.0, datetime.date(2023, 1, 1), datetime.date(2024, 1, 1)))
 
     conn.commit()
     conn.close()

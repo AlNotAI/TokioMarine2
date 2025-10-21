@@ -5,6 +5,7 @@ from datetime import date
 class InsurancePolicy(BaseModel):
     id: int
     uuid: UUID
+    item: str = Field(..., alias="hitem")
     policy_holder_name: str = Field(..., alias="holder")
     coverage_amount: int = Field(..., alias="hcoverage_amount")
     premium: int
