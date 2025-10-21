@@ -34,7 +34,6 @@ def _to_dict(obj):
 
 @app.get("/api/policies/")
 def read_policies():
-    # return [policy.dict() for policy in get_all_policies()]
     return _to_dict([policy for policy in get_all_policies()])
 
 
@@ -43,5 +42,5 @@ def read_policy(uuid: str):
     policy = get_policy_by_uuid(uuid)
     if not policy:
         raise HTTPException(status_code=404, detail="Policy not found")
-    # return policy.dict()
-    return _to_dict(policy)
+
+    return _to_dict([policy])
