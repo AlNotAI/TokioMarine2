@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from insurance.application.policy_service import get_all_policies, get_policy_by_uuid
+from dotenv import load_dotenv
+load_dotenv()  # loads .env into environment
 
 # def get_all_policies():
 #     # Placeholder for actual implementation
