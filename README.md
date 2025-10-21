@@ -67,6 +67,3 @@ pytest -q
   - application/ — use cases and services
 - tests/ — unit and integration tests
 
-## Notes for the demo
-- Focus discussion on the domain model validation, API design, and testing strategy.
-- Bring up trade-offs for error handling, validation, and deployment.
