@@ -59,6 +59,17 @@ Run the test suite with pytest:
 pytest -q
 ```
 
+## Run The Frontend (optional)
+A minimal frontend is provided for demonstration purposes. To run the frontend:
+1. Navigate to the `client` directory:
+   ```sh
+   cd client
+   python -m http.server 3000  # or use any static file server
+
+   ```
+2. Open your browser and go to `http://localhost:3000/insurance_viewer.html` to view the frontend.
+
+
 ## Project layout
 - insurance/ — application package
   - domain/ — domain models (e.g. InsurancePolicy)

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Insurance Claims Viewer</title>
+  <title>Insurance Policies Viewer</title>
 
   <!-- HTMX and HyperScript -->
   <script src="https://unpkg.com/htmx.org@1.9.2"></script>
@@ -45,7 +45,7 @@
       margin-right: 5px;
     }
 
-    #claims {
+    #policies {
       margin-top: 2em;
       background-color: #fff;
       padding: 1em;
@@ -90,24 +90,24 @@
 </head>
 <body>
 
-  <h2>Insurance Claims Viewer</h2>
+  <h2>Insurance Policies Viewer</h2>
 
   <!-- Toggle Mode -->
   <button _="on click
                toggle .hidden on #all-mode
                toggle .hidden on #single-mode
-               put '' into #claims">
+               put '' into #policies">
     Toggle View Mode
   </button>
 
-  <!-- All Claims Mode -->
+  <!-- All Policies Mode -->
   <div id="all-mode">
     <button _="on click
                  remove .hidden from #spinner
                  wait 10ms
                  fetch 'http://localhost:8000/api/policies/' as json with method:'GET'
-                 then call renderClaims(result)">
-      Load All Claims
+                 then call renderPolicies(result)">
+      Load All Policies
     </button>
   </div>
 
@@ -121,13 +121,13 @@
   <div id="spinner" class="spinner hidden"></div>
 
   <!-- Output container -->
-  <div id="claims"></div>
+  <div id="policies"></div>
 
   <!-- HyperScript functions -->
   <script type="text/hyperscript">
-    def renderClaims(claims)
+    def renderPolicies(policies)
       set html to "<ul>"
-      repeat for claim in claims
+      repeat for claim in policies
         set html to html + "<li>"
         set html to html + "<strong>" + claim.holder + "</strong><br>"
         set html to html + "Item: " + claim.hitem + "<br>"
@@ -139,7 +139,7 @@
         set html to html + "</li>"
       end
       set html to html + "</ul>"
-      put html into #claims
+      put html into #policies
       add .hidden to #spinner
     end
 
@@ -150,7 +150,7 @@
       set url2 to "http://localhost:8000/api/policies/" + uuid 
       log url2
       fetch `${url2}` as json with method:'GET'
-        then call renderClaims([result])
+        then call renderPolicies([result])
     end
   </script>
 
