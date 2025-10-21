@@ -4,3 +4,4 @@ pydantic
 click
 python-dotenv
 pytest
+sqlite3
