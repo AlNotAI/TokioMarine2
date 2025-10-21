@@ -162,3 +162,10 @@ PYTHONPATH=. pytest -q
 PYTHONPATH=. make init
 PYTHONPATH=. make run
 PYTHONPATH=. make test
+
+
+## Notes
+- This is a minimal demo for technical discussion purposes and not intended for production use.
+- For production, consider proper error handling, logging, security, and configuration management.
+- I want to fully containerize with Docker and add CI/CD in future iterations.
+- I want to consider alternative frontend implementations (e.g., React, Vue) in future iterations.
