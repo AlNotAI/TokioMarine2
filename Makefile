@@ -2,7 +2,7 @@ init:
 	python main.py init-db --db ./insurance.db
 
 run:
-	uvicorn insurance.interfaces.api:app --host 0.0.0.0 --port 8000
+	uvicorn insurance.interfaces.api:app --host localhost --port 8000
 
 test:
 	pytest tests/ -v

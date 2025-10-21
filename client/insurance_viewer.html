@@ -105,7 +105,7 @@
     <button _="on click
                  remove .hidden from #spinner
                  wait 10ms
-                 fetch 'http://0.0.0.0:8000/api/policies/' as json with method:'GET'
+                 fetch 'http://localhost:8000/api/policies/' as json with method:'GET'
                  then call renderClaims(result)">
       Load All Claims
     </button>
@@ -130,8 +130,9 @@
       repeat for claim in claims
         set html to html + "<li>"
         set html to html + "<strong>" + claim.holder + "</strong><br>"
-        set html to html + "Item: " + claim['hitem'] + "<br>"
-        set html to html + "Coverage: £" + claim['hcoverage_amount'] + "<br>"
+        set html to html + "Item: " + claim.hitem + "<br>"
+        set html to html + "UUID: " + claim.uuid + "<br>"
+        set html to html + "Coverage: £" + claim.hcoverage_amount + "<br>"
         set html to html + "Policy Start Date: " + claim.start_date + "<br>"
         set html to html + "Policy End Date: " + claim.end_date + "<br>"
         set html to html + "Premium: £" + claim.premium + "<br>"
@@ -146,9 +147,10 @@
       remove .hidden from #spinner
       wait 10ms
       set uuid to the value of #claim-id
-      set url to "http://0.0.0.0:8000/api/policies/" + uuid
-      fetch url
-      then call renderClaims([result])
+      set url2 to "http://localhost:8000/api/policies/" + uuid 
+      log url2
+      fetch `${url2}` as json with method:'GET'
+        then call renderClaims([result])
     end
   </script>
 

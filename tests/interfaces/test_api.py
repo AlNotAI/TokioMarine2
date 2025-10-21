@@ -18,8 +18,8 @@ def test_get_all_policies(monkeypatch):
     data = response.json()
     assert isinstance(data, list)
     assert len(data) == 2
-    assert data[0]["policy_holder_name"] == "Alice"
-    assert data[1]["policy_holder_name"] == "Bob"
+    assert data[0]["holder"] == "Alice"
+    assert data[1]["holder"] == "Bob"
 
 
 def test_api_get_policy_by_uuid(monkeypatch):

@@ -22,7 +22,7 @@ def get_all_policies():
 def get_policy_by_uuid(uuid):
     row = fetch_policy_by_uuid(uuid)
     if row:
-        return InsurancePolicy(
+        return [InsurancePolicy(
             id=row[0],
             uuid=row[1],
             item=row[2],
@@ -31,5 +31,5 @@ def get_policy_by_uuid(uuid):
             premium=row[5],
             start_date=row[6],
             end_date=row[7],
-        )
+        )]
     return None

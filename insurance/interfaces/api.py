@@ -8,10 +8,14 @@ load_dotenv()  # loads .env into environment
 
 app = FastAPI(default_response_class=JSONResponse)
 
+# Allow requests from your frontend origin
+origins = [
+    "http://localhost:3000",  # or whatever port your frontend runs on
+]
 # add CORS middleware (development: allow all origins)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # change to specific origins in production e.g. ["https://example.com"]
+    allow_origins=origins,  # change to specific origins in production e.g. ["https://example.com"]
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -39,4 +43,5 @@ def read_policy(uuid: str):
     policy = get_policy_by_uuid(uuid)
     if not policy:
         raise HTTPException(status_code=404, detail="Policy not found")
-    return policy.dict()
+    # return policy.dict()
+    return _to_dict(policy)
